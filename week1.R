@@ -64,3 +64,24 @@ highchart(type = "stock") %>%
   ) %>%
   hc_legend(enabled = TRUE)
 
+# Interactive line chart for apj
+
+highchart(type = "stock") %>%
+  hc_add_series(data = life_exp_apj,
+                type = "line",
+                color = "lightblue",
+                hcaes(x = as.Date(ISOdate(Year,1,1)),
+                      y = round(life_exp_years,1),
+                      group = life_exp_apj$`Country Name`
+                )
+  )   %>%
+  hc_add_series(data = life_exp_high_income,
+                type = "line",
+                color = "black",
+                name = "High income economies",
+                hcaes(x = as.Date(ISOdate(Year,1,1)),
+                      y = round(life_exp_years,1)
+                )
+  ) %>%
+  hc_tooltip(sort = TRUE)
+
