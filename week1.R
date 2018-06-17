@@ -45,5 +45,22 @@ life_exp_apj <- life_exp_1990 %>%
 life_exp_high_income <- life_exp_1990 %>%
   filter(IncomeGroup == "High income")
 
+# Interactive line chart for income groups
 
+highchart(type = "stock") %>%
+  hc_add_series(data = life_exp_1990,
+                type = "line",
+                hcaes(x = as.Date(ISOdate(Year,1,1)),
+                      y = life_exp_years,
+                      group = life_exp_1990$IncomeGroup
+                )
+  )  %>%
+  hc_add_series(data = life_exp_sing,
+                type = "line",
+                name = "Singapore",
+                hcaes(x = as.Date(ISOdate(Year,1,1)),
+                      y = life_exp_years
+                )
+  ) %>%
+  hc_legend(enabled = TRUE)
 
