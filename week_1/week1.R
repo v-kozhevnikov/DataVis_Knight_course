@@ -7,8 +7,8 @@ library(lubridate)
 
 #loading the data from Worldbank
 
-life_exp <- read_csv("data/life_expectancy.csv", skip = 4)
-countries <- read_csv("data/countries.csv")
+life_exp <- read_csv("week_1/data/life_expectancy.csv", skip = 4)
+countries <- read_csv("week1/data/countries.csv")
 
 
 # Making data clean and long and limiting to 1990 - 2009
