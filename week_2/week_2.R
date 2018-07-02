@@ -46,3 +46,6 @@ balance_usa_since_2005 %>%
   scale_color_manual(values=c("black", "orange"), name = "") +
   theme_minimal() +
   theme(legend.position = "bottom") 
+
+
+ggsave("week_2/trade_balance.jpeg")
