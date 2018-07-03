@@ -22,4 +22,17 @@ ggsave("week_3/USrate.jpeg")
 
 
 #checking if the growth in suicide rates is associated with firearms
+suicide_data %>%
+  filter((Sex == "Both sexes") & (`Age group (years)` == "All Ages") & (Race == "All races") & (`Injury mechanism` %in% c("All Mechanisms", "Firearm"))) %>%
+  select(-7) %>%
+  spread(key = `Injury mechanism`, value = rate) %>%
+  mutate(firearm_share = (Firearm/(`All Mechanisms`))) %>%
+  ggplot() +
+  geom_line(aes(x = Year, y = firearm_share), stat = "identity") +
+  theme_minimal()
 
+ggsave("week_3/firearm_share.jpeg")
+
+# no, the share is falling     
+
+suicide_by_state <- read_tsv("week_3/data/Underlying Cause of Death, 1999-2016.txt")
