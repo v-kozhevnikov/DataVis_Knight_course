@@ -35,4 +35,37 @@ ggsave("week_3/firearm_share.jpeg")
 
 # no, the share is falling     
 
-suicide_by_state <- read_tsv("week_3/data/Underlying Cause of Death, 1999-2016.txt")
+#checking if higher inequality leads to higher suicide rates, year 2016
+suicide_by_state <- read_tsv("week_3/data/Underlying Cause of Death, 1999-2016.txt")[,c(2,4,6,7,8)]
+
+gini_by_state <- read_csv("week_3/data/gini.csv")
+
+suicide_by_state %>%
+  filter(Year == 2016) %>%
+  inner_join(gini_by_state, by = "State") %>%
+  ggplot(aes(x = `Gini Coefficient`, y = `Crude Rate`)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme_minimal()
+
+ggsave("week_3/gini.jpeg")
+
+#the dependency is the oppposite
+
+#comparing real wage from https://www.bea.gov/newsreleases/regional/rpp/2017/pdf/rpp0617.pdf
+#data for 2015
+
+real_wage <- read_csv("week_3/data/real_wage.csv")
+
+suicide_by_state %>%
+  filter(Year == 2015) %>%
+  inner_join(real_wage, by = "State") %>%
+  ggplot(aes(x = Real_wage, y = `Crude Rate`)) +
+  geom_point() +
+#  xlim(35000,50000) +
+  geom_smooth(se = FALSE) +
+  theme_minimal()
+
+ggsave("week_3/income.jpeg")
+
+#negative dependency again
