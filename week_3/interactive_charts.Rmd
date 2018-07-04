@@ -1,0 +1,46 @@
+---
+title: "Suicide rates in US"
+output: html_document
+---
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(readr)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(highcharter)
+
+
+```
+
+
+**Suicide rate compared to Gini index**
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+suicide_by_state <- read_tsv("data/Underlying Cause of Death, 1999-2016.txt")[,c(2,4,6,7,8)]
+
+gini_by_state <- read_csv("data/gini.csv")
+
+suicide_by_state %>%
+  filter(Year == 2016) %>%
+  inner_join(gini_by_state, by = "State") %>%
+  hchart("scatter", hcaes(x = `Gini Coefficient`, y = `Crude Rate`)) %>%
+  hc_tooltip(crosshairs = TRUE, headerFormat = "", pointFormat = "{point.State}")
+
+
+```
+
+
+**Suicide rate compared to real wages**
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+real_wage <- read_csv("data/real_wage.csv")
+
+suicide_by_state %>%
+  filter(Year == 2015) %>%
+  inner_join(real_wage, by = "State") %>%
+  hchart("scatter", hcaes(x = Real_wage, y = `Crude Rate`)) %>%
+  hc_tooltip(crosshairs = TRUE, headerFormat = "", pointFormat = "{point.State}")
+
+
+```
